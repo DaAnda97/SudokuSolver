@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group 'de.ariepl.projects'
+version '1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.2")
+    testImplementation('org.hamcrest:hamcrest:2.2')
+}

@@ -19,30 +19,25 @@ public class Sudoku {
 
     public int[][] solve() {
 
-        if (isSolved()) {
-            if (guesser != null) {
-                guesser.print();
+        while (!isSolved()) {
+            Set<SudokuField> changedFields = setIfOnlyOnePossibility();
+
+            if (changedFields.size() == 0) {
+
+                if (guesser == null) {
+                    guesser = new Guesser(allFields);
+                }
+
+                Guess guess = guesser.getNextGuess(allFields);
+                allFields.setGuess(guess);
             }
-            return allFields.asMatrix();
         }
 
-        // 1) Set Fields, which have only one possible value left
-        Set<SudokuField> changedFields = setIfOnlyOnePossibility();
-
-        // 2) If there was no field, which had only one possible value, use guessing with backtracking
-        if (changedFields.size() == 0) {
-
-            // 2a) init
-            if (guesser == null) {
-                guesser = new Guesser(allFields);
-            }
-
-            // 2b) guess
-            Guess guess = guesser.getNextGuess(allFields);
-            allFields.setGuess(guess);
+        if (guesser != null) {
+            guesser.print();
         }
 
-        return solve();
+        return allFields.asMatrix();
 
     }
 
